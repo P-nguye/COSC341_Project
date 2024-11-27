@@ -13,6 +13,24 @@
         android:theme="@style/Theme.COSC341_Project"
         tools:targetApi="31">
         <activity
+            android:name=".MainTemp"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PlantCropAdd"
+            android:exported="false" />
+        <activity
+            android:name=".PlantCropEdit"
+            android:exported="false" />
+        <activity
+            android:name=".PlantCropTracker"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
