@@ -46,8 +46,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void toTracker(View view){
-        Intent intent = new Intent(this, PlantCropTracker.class);
-        startActivity(intent);
-    }
 }
