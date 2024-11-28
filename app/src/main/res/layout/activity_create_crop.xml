@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Other UI components like EditText and Create Crop Button -->
+        <EditText
+            android:id="@+id/cropName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Crop Name" />
+
+        <EditText
+            android:id="@+id/cropType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Crop Type" />
+
+        <EditText
+            android:id="@+id/cropQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Crop Quantity"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/createCropButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Crop" />
+
+        <!-- Back button -->
+        <Button
+            android:id="@+id/backToMainButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back to Main Page" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

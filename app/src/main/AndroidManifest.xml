@@ -13,6 +13,18 @@
         android:theme="@style/Theme.COSC341_Project"
         tools:targetApi="31">
         <activity
+            android:name=".DeleteCrop"
+            android:exported="false" />
+        <activity
+            android:name=".YieldReport"
+            android:exported="false" />
+        <activity
+            android:name=".HarvestDetail"
+            android:exported="false" />
+        <activity
+            android:name=".HarvestReport"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -21,6 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CreateCrop" />
     </application>
 
 </manifest>
