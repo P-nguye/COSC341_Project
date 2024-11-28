@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button openCreateCropButton, btnHarvestReport;
+    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize buttons
         openCreateCropButton = findViewById(R.id.openCreateCropButton);
         btnHarvestReport = findViewById(R.id.btnHarvestReport);
+        buttonToGardenTracker = findViewById(R.id.toTrackerButton);
 
         // Set click listeners for both buttons
         openCreateCropButton.setOnClickListener(this);
         btnHarvestReport.setOnClickListener(this);
+        buttonToGardenTracker.setOnClickListener(this);
     }
 
     @Override
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Navigate to HarvestReport activity
             Intent harvestReportIntent = new Intent(MainActivity.this, HarvestReport.class);
             startActivity(harvestReportIntent);
+        } else if (v.getId() == R.id.toTrackerButton) {
+            Intent intent = new Intent(this, GardenTracker.class);
+            startActivity(intent);
         }
     }
 }
