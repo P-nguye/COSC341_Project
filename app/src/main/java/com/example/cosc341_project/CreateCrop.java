@@ -9,13 +9,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,16 +69,36 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
                 int quantity = Integer.parseInt(quantityStr);
-                createCrop(name, type, quantity);
-            }
+                checkForDuplicateCrop(name, type, quantity);            }
         } else if (v.getId() == R.id.backToMainButton) {
             // Handle Back to Main button click
 
             finish(); // Optional: Closes the current activity
         }
     }
+    private void checkForDuplicateCrop(String name, String type, int quantity) {
+        // Query the database to check if the crop name already exists
+        databaseReference.orderByChild("name").equalTo(name)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            // Crop name already exists
+                            Toast.makeText(CreateCrop.this, "A crop with this name already exists.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // No duplicates found, proceed to create crop
+                            createCrop(name, type, quantity);
+                        }
+                    }
 
-    private void createCrop(String name, String type, int quantity) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(CreateCrop.this, "Failed to check for duplicates: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+                    private void createCrop(String name, String type, int quantity) {
         // Generate a unique key for the crop
         String cropId = databaseReference.push().getKey();
 
