@@ -13,9 +13,6 @@
         android:theme="@style/Theme.COSC341_Project"
         tools:targetApi="31">
         <activity
-            android:name=".DeleteCrop"
-            android:exported="false" />
-        <activity
             android:name=".YieldReport"
             android:exported="false" />
         <activity

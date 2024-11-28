@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "380537216607",
+    "project_id": "cosc-341---project",
+    "storage_bucket": "cosc-341---project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380537216607:android:6e896b2900d59c3b4d85ea",
+        "android_client_info": {
+          "package_name": "com.example.cosc341_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV22TX4Y4MJYIRF4USOYvsNpImpRZgYmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
