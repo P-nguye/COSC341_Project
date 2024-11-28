@@ -69,8 +69,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
             }
         } else if (v.getId() == R.id.backToMainButton) {
             // Handle Back to Main button click
-            Intent intent = new Intent(CreateCrop.this, MainActivity.class);
-            startActivity(intent);
+
             finish(); // Optional: Closes the current activity
         }
     }
