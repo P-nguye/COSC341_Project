@@ -25,8 +25,9 @@ public class WeatherInfo extends AppCompatActivity {
     private Button fetchWeatherButton,backToMainButton;
     private ScrollView scrollView;
     private LinearLayout scrollLinearLayout;
-    private final String apiKey = "edbd77124bc35b8a752e42d3c51e558e";
-    private final String baseUrl = "https://api.openweathermap.org/";
+    //Comment for security purposes
+    //private final String apiKey = "edbd77124bc35b8a752e42d3c51e558e";
+    //private final String baseUrl = "https://api.openweathermap.org/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
