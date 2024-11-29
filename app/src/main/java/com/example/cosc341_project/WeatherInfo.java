@@ -103,6 +103,10 @@ public class WeatherInfo extends AppCompatActivity {
         addTextView("Pressure: " + weatherResponse.main.pressure + " hPa");
         addTextView("Weather Condition: " + weatherResponse.weather.get(0).description);
         addTextView("Wind Speed: " + weatherResponse.wind.speed + " m/s");
+// Add rain information if available
+        if (weatherResponse.rain != null) {
+            addTextView("Rain (last 1h): " + weatherResponse.rain._1h + " mm");
+        }
     }
 
     private void addTextView(String text) {
