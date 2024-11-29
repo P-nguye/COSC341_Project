@@ -6,14 +6,18 @@ plugins {
 android {
     namespace = "com.example.cosc341_project"
     compileSdk = 34
-
+    buildFeatures {
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.example.cosc341_project"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+// Inject API key securely
+        val weatherApiKey = System.getenv("WEATHER_API_KEY") ?: "your_default_api_key"
+        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,6 +35,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
+
 
 dependencies {
 

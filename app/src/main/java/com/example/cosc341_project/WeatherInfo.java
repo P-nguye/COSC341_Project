@@ -2,6 +2,7 @@ package com.example.cosc341_project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,8 +27,9 @@ public class WeatherInfo extends AppCompatActivity {
     private ScrollView scrollView;
     private LinearLayout scrollLinearLayout;
     //Comment for security purposes
-    //private final String apiKey = "edbd77124bc35b8a752e42d3c51e558e";
-    //private final String baseUrl = "https://api.openweathermap.org/";
+    //Delete BuildConfig.WEATHER_API_KEY and replace with the api key stored in local.properties
+    private final String apiKey = BuildConfig.WEATHER_API_KEY;;
+    private final String baseUrl = "https://api.openweathermap.org/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class WeatherInfo extends AppCompatActivity {
             finish(); // Finish the current activity to prevent returning to it
         });
     }
+
+
 
     private void fetchWeatherData(String cityName) {
         WeatherService weatherService = RetrofitClient.getClient(baseUrl).create(WeatherService.class);
