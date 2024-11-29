@@ -129,10 +129,10 @@ public class HarvestReport extends AppCompatActivity {
 
         builder.setPositiveButton("Show Info", (dialog, which) -> showHarvestInfo(cropType));
 
-        builder.setNegativeButton("Add Info", (dialog, which) -> {
+        builder.setNegativeButton("Add Info/Delete crop", (dialog, which) -> {
             Intent intent = new Intent(HarvestReport.this, HarvestDetail.class);
-            intent.putExtra("cropType", cropType);
-            startActivity(intent);
+            addOrDelete(cropType);
+
         });
         // Show Yield Report option
         builder.setNeutralButton("Show Yield Report", (dialog, which) -> {
@@ -144,6 +144,55 @@ public class HarvestReport extends AppCompatActivity {
 
 
         //builder.setNeutralButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.show();
+    }
+    private void addOrDelete(String cropType) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HarvestReport.this);
+        builder.setTitle("Add or Delete?");
+        builder.setMessage("Do you want to add info or delete "  + cropType + "?");
+        builder.setPositiveButton("Add", (dialog, which) -> {
+            Intent intent = new Intent(this, HarvestDetail.class);
+            intent.putExtra("cropType", cropType);
+            startActivity(intent);
+
+        });
+        builder.setNegativeButton("Delete", (dialog, which) -> {
+            delete(cropType);
+//            Toast.makeText(GardenEdit.this, "No", Toast.LENGTH_SHORT).show();
+        });
+        builder.show();
+    }
+    private void delete(String cropType){
+        AlertDialog.Builder builder = new AlertDialog.Builder(HarvestReport.this);
+        builder.setTitle("Warning!!!");
+        builder.setMessage("Are you sure you want to delete " + cropType + " ?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            databaseReference.orderByChild("name").equalTo(cropType).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Iterate through all children with the matching "name"
+                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                        // Remove the child
+                        childSnapshot.getRef().removeValue().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Deletion failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getApplicationContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+//            Toast.makeText(HarvestReport.this, cropType + " Deleted", Toast.LENGTH_SHORT).show();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+//            Toast.makeText(GardenEdit.this, "No", Toast.LENGTH_SHORT).show();
+        });
         builder.show();
     }
     private void showHarvestInfo(String cropType) {
