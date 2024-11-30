@@ -59,8 +59,7 @@ public class HarvestReport extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Navigate back to MainActivity
-                Intent intent = new Intent(HarvestReport.this, MainActivity.class);
-                startActivity(intent);
+
                 finish(); // Optional: Closes the current activity
             }
         });

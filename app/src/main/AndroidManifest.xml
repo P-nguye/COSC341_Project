@@ -19,6 +19,15 @@
             android:name=".ScheduleHub"
             android:exported="false" />
         <activity
+            android:name=".GardenEdit"
+            android:exported="false" />
+        <activity
+            android:name=".GardenAdd"
+            android:exported="false" />
+        <activity
+            android:name=".GardenTracker"
+            android:exported="false" />
+        <activity
             android:name=".YieldReport"
             android:exported="false" />
         <activity
