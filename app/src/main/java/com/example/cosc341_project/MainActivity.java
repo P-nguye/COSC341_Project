@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Navigate to HarvestReport activity
             Intent harvestReportIntent = new Intent(MainActivity.this, HarvestReport.class);
             startActivity(harvestReportIntent);
+        } else if (v.getId() == R.id.weatherInfoButton) {
+            // Navigate to WeatherInfo activity
+            Intent weatherInfoIntent = new Intent(MainActivity.this, WeatherInfo.class);
+            startActivity(weatherInfoIntent);
         } else if (v.getId() == R.id.toTrackerButton) {
             Intent intent = new Intent(this, GardenTracker.class);
             startActivity(intent);
