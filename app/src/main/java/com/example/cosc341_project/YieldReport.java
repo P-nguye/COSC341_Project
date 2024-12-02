@@ -64,8 +64,8 @@ public class YieldReport extends AppCompatActivity {
         // Handle Back Button
         backButton.setOnClickListener(v -> {
             // Navigate back to HarvestReport
-            Intent intent = new Intent(YieldReport.this, HarvestReport.class);
-            startActivity(intent);
+//            Intent intent = new Intent(YieldReport.this, HarvestReport.class);
+//            startActivity(intent);
             finish(); // Optional: Close current activity
         });
     }
