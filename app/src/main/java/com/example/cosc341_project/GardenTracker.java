@@ -72,7 +72,7 @@ public class GardenTracker extends AppCompatActivity {
                 String childName = childList.get(parentList.get(groupPosition)).get(childPosition);
 
                 // Show a Toast message
-                Toast.makeText(GardenTracker.this, "Clicked: " + childName + childPosition, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(GardenTracker.this, "Clicked: " + childName + childPosition, Toast.LENGTH_SHORT).show();
                 String[] parts = new String[2];
                 String garden = parentList.get(groupPosition).toString();
                 String plant = childList.get(parentList.get(groupPosition)).get(0);
