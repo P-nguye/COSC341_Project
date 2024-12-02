@@ -132,6 +132,7 @@ public class HarvestReport extends AppCompatActivity {
         builder.setNegativeButton("Add Info/Delete crop", (dialog, which) -> {
             Intent intent = new Intent(HarvestReport.this, HarvestDetail.class);
             addOrDelete(cropType);
+
         });
         // Show Yield Report option
         builder.setNeutralButton("Show Yield Report", (dialog, which) -> {
