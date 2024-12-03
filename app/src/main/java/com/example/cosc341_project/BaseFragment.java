@@ -33,13 +33,12 @@ public class BaseFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
-
         recyclerView = view.findViewById(R.id.recycler_vw);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         scheduleList = new ArrayList<>();
         //Get the iterator for the schedules
-        adapter = new ScheduleAdapter(scheduleList);
+        adapter = new ScheduleAdapter(this.getContext(),scheduleList);
         recyclerView.setAdapter(adapter);
         //initialize db
         db = FirebaseDatabase.getInstance().getReference("schedules");

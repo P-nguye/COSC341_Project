@@ -2,6 +2,7 @@ package com.example.cosc341_project;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -48,6 +49,7 @@ public class CreateSchedule extends AppCompatActivity {
     private boolean edited;
     ArrayAdapter<CharSequence> repeatAdapter;
     ArrayAdapter<String> gardenAdapter;
+    Context context=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,6 @@ public class CreateSchedule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_schedule);
-
         //Initialize db
         db = FirebaseDatabase.getInstance().getReference("schedules");
         gardenDB = FirebaseDatabase.getInstance().getReference("crops");
@@ -131,10 +132,12 @@ public class CreateSchedule extends AppCompatActivity {
             // Update the existing entry
             id=getIntent().getStringExtra("Schedule");
             if(id!=null){
+                schedule.put("id", id);
                 db.child(id).updateChildren(schedule)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(this, "Schedule updated successfully", Toast.LENGTH_SHORT).show();
-                            finish(); // Close the activity
+                            Intent intent = new Intent(this, ScheduleHub.class);
+                            startActivity(intent);
                         })
                         .addOnFailureListener(e -> {
                             Toast.makeText(this, "Failed to Save Schedule", Toast.LENGTH_SHORT).show();
@@ -146,10 +149,13 @@ public class CreateSchedule extends AppCompatActivity {
             // Save to Firebase
             id = db.push().getKey();
             if(id!=null) {
+                schedule.put("id", id);
+                Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
                 db.child(id).setValue(schedule)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(CreateSchedule.this, "Schedule saved", Toast.LENGTH_SHORT).show();
-                            finish();
+                            Intent intent = new Intent(this, ScheduleHub.class);
+                            startActivity(intent);
                         })
                         .addOnFailureListener(e -> Toast.makeText(CreateSchedule.this, "Failed to save schedule", Toast.LENGTH_SHORT).show());
             }
@@ -236,18 +242,23 @@ public class CreateSchedule extends AppCompatActivity {
                         spinnerRepeat.setSelection(pos);
                     }
                     String garden = snapshot.child("garden").getValue(String.class);
-                    if(garden!=null){
+                    if(!garden.equals("No crops available")){
+                        Toast.makeText(CreateSchedule.this, "Here", Toast.LENGTH_SHORT).show();
                         int pos=gardenAdapter.getPosition(garden);
                         spinnerRepeat.setSelection(pos);
+
                     }
                     boolean r= Boolean.TRUE.equals(snapshot.child("reminder").getValue(Boolean.class));
                         cbReminder.setChecked(r);
+                }
+                else{
+                    Toast.makeText(context, "Data not found for this ID", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(CreateSchedule.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show();
             }
         });
     }

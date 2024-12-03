@@ -7,17 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder> {
+    private Context context;
+    private DatabaseReference db;
     private ArrayList<Schedule> scheduleList;
 
-    public ScheduleAdapter(ArrayList<Schedule> scheduleList) {
+    public ScheduleAdapter(Context context, ArrayList<Schedule> scheduleList) {
+        this.context=context;
         this.scheduleList = scheduleList;
+        this.db= FirebaseDatabase.getInstance().getReference("schedules");
     }
     @NonNull
     @Override
@@ -45,6 +53,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             intent.putExtra("Schedule", schedule.getId());
             context.startActivity(intent);
         });
+        holder.btnDelete.setOnClickListener(v ->{
+            showDeletePrompt(schedule, position);
+        });
     }
 
     @Override
@@ -52,10 +63,42 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         return scheduleList.size();
     }
 
+    private void deleteSchedule(Schedule schedule, int position) {
+        // Remove from Firebase
+        String scheduleId = schedule.getId(); // Ensure Schedule class has an `id` field
+        if (scheduleId != null) {
+            db.child(scheduleId).removeValue()
+                    .addOnSuccessListener(aVoid -> {
+                        // Remove from the list and notify adapter
+                        scheduleList.remove(position);
+                        notifyItemRemoved(position);
+                        Toast.makeText(context, "Schedule deleted successfully", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(context, "Failed to delete schedule: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(context, "Schedule ID is null, cannot delete.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showDeletePrompt(Schedule schedule, int position) {
+        // Show confirmation dialog
+        new androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle("Delete Schedule")
+                .setMessage("Are you sure you want to delete this schedule?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    // Remove schedule from Firebase and the list
+                    deleteSchedule(schedule, position);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
     //Create the generic placeholder displaying all of the data for the schedule view holder
     public static class ScheduleViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvDateTime, tvGardenName, tvNotes;
-        Button btnEdit;
+        Button btnEdit, btnDelete;
         public ScheduleViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.title_tv);
@@ -63,6 +106,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             tvGardenName = itemView.findViewById(R.id.gardenname_tv);
             tvNotes = itemView.findViewById(R.id.notes_tv);
             btnEdit = itemView.findViewById(R.id.edit_btn);
+            btnDelete = itemView.findViewById(R.id.delete_schedule_btn);
         }
     }
+
 }

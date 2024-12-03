@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "564231139215",
+    "project_id": "gardenmanager-422d4",
+    "storage_bucket": "gardenmanager-422d4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564231139215:android:fa66aa4215a999da4fe5fa",
+        "android_client_info": {
+          "package_name": "com.example.cosc341_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ_PbRQiJGXA623_3k3wcTuR9Re4uLzdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
