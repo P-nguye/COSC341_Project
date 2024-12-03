@@ -21,8 +21,8 @@
 
     <EditText
         android:id="@+id/schedule_title"
-        android:layout_width="344dp"
-        android:layout_height="57dp"
+        android:layout_width="355dp"
+        android:layout_height="65dp"
         android:layout_marginTop="24dp"
         android:hint="Title"
         android:importantForAccessibility="yes"
