@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         openCreateCropButton.setOnClickListener(this);
         btnHarvestReport.setOnClickListener(this);
         buttonToGardenTracker.setOnClickListener(this);
+        btnToSchedules.setOnClickListener(this);
     }
 
     @Override
