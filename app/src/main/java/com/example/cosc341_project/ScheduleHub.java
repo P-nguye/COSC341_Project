@@ -38,14 +38,17 @@ public class ScheduleHub extends AppCompatActivity {
                 Fragment selectedFragment = null;
 
                 switch (tab.getPosition()) {
-                    case 0:
-                        selectedFragment = new TodayFragment();
-                        break;
                     case 1:
                         selectedFragment = new ThisWeekFragment();
                         break;
                     case 2:
                         selectedFragment = new ThisMonthFragment();
+                        break;
+                    case 3:
+                        selectedFragment = new AllSchedulesFragment();
+                        break;
+                    default:
+                        selectedFragment = new TodayFragment();
                         break;
                 }
 
