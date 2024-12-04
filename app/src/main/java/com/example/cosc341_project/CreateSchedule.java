@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -175,13 +176,29 @@ public class CreateSchedule extends AppCompatActivity {
 
     private void showDatePicker() {
         Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-            selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
-            //set the text to selected date
-            tvDate.setText(selectedDate);
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
+        // Get current date values
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        new DatePickerDialog(this, (view, selectyear, selectmonth, dayOfMonth) -> {
+            // Update calendar with selected date
+            calendar.set(Calendar.YEAR, selectyear);
+            calendar.set(Calendar.MONTH, selectmonth);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            // Format date and set to TextView
+            updateDateLabel(calendar);
+        },
+                year, month, day
+        ).show();
+    }
+    private void updateDateLabel(Calendar c) {
+        // Format the date (e.g., "MMM dd, yyyy")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        selectedDate = dateFormat.format(c.getTime());
+        tvDate.setText(selectedDate);
+    }
     private void populateSpinners() {
         //Set the repetition adapter
         repeatAdapter = ArrayAdapter.createFromResource(this,
