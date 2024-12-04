@@ -38,6 +38,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Go to Create Crop Page" />
+
+        <Button
+            android:id="@+id/toSchedulesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to Schedules Page" />
+
         <Button
             android:id="@+id/btnHarvestReport"
             android:layout_width="wrap_content"

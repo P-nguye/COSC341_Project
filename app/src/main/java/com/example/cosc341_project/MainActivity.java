@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker;
+    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +31,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         openCreateCropButton = findViewById(R.id.openCreateCropButton);
         btnHarvestReport = findViewById(R.id.btnHarvestReport);
         buttonToGardenTracker = findViewById(R.id.toTrackerButton);
+        btnToSchedules=findViewById(R.id.toSchedulesButton);
 
         // Set click listeners for both buttons
         openCreateCropButton.setOnClickListener(this);
         btnHarvestReport.setOnClickListener(this);
         buttonToGardenTracker.setOnClickListener(this);
+        btnToSchedules.setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(weatherInfoIntent);
         } else if (v.getId() == R.id.toTrackerButton) {
             Intent intent = new Intent(this, GardenTracker.class);
+            startActivity(intent);
+        }
+        else if(v.getId()==R.id.toSchedulesButton){
+            Intent intent = new Intent(this, ScheduleHub.class);
             startActivity(intent);
         }
     }
