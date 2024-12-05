@@ -47,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
                 handleLogin();
             }
         });
+        //set up forgot password button
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
         // Set up register button
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

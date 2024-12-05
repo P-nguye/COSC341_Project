@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
-    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules;
+    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules,btnLogout;
     private String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +36,14 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         btnHarvestReport = findViewById(R.id.btnHarvestReport);
         buttonToGardenTracker = findViewById(R.id.toTrackerButton);
         btnToSchedules=findViewById(R.id.toSchedulesButton);
+        btnLogout = findViewById(R.id.btnLogout);
 
         // Set click listeners for both buttons
         openCreateCropButton.setOnClickListener(this);
         btnHarvestReport.setOnClickListener(this);
         buttonToGardenTracker.setOnClickListener(this);
         btnToSchedules.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
     }
 
     @Override
@@ -70,6 +72,12 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
             Intent intent = new Intent(this, ScheduleHub.class);
             intent.putExtra("userKey", userKey);
             startActivity(intent);
+        }else if (v.getId() == R.id.btnLogout) {
+            // Log out and navigate to MainActivity (Login Page)
+            Intent logoutIntent = new Intent(HomePage.this, MainActivity.class);
+            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(logoutIntent);
+            finish();
         }
     }
 }
