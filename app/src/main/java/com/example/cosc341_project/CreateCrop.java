@@ -28,7 +28,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
     private EditText cropName, cropType, cropQuantity;
     private Button createCropButton, backToMainButton;
     private DatabaseReference databaseReference;
-
+    private String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +41,16 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Retrieve the userKey passed from the previous activity
+        userKey = getIntent().getStringExtra("userKey");
+        if (userKey == null) {
+            Toast.makeText(this, "Error: User not logged in.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         // Initialize Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("crops");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("crops");
 
         // Initialize UI components
         cropName = findViewById(R.id.cropName);

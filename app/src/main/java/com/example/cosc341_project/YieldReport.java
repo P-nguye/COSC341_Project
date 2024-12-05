@@ -36,7 +36,7 @@ public class YieldReport extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String cropType;
     private Button backButton;
-
+    private String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +55,18 @@ public class YieldReport extends AppCompatActivity {
         backButton=findViewById(R.id.backButton);
         // Get crop type from Intent
         cropType = getIntent().getStringExtra("cropType");
+        userKey = getIntent().getStringExtra("userKey");
+        if (userKey == null) {
+            Toast.makeText(this, "Error: User not logged in.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         // Initialize Firebase reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("harvest_info").child(cropType);
+        databaseReference = FirebaseDatabase.getInstance() .getReference("users")
+                .child(userKey)
+                .child("harvest_info")
+                .child(cropType);
 
         // Fetch data and display bar chart
         fetchYieldData();

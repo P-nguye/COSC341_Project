@@ -55,7 +55,7 @@ public class WeatherInfo extends AppCompatActivity {
         });
         // Set back to main page button click listener
         backToMainButton.setOnClickListener(v -> {
-            Intent intent = new Intent(WeatherInfo.this, MainActivity.class);
+            Intent intent = new Intent(WeatherInfo.this, HomePage.class);
             startActivity(intent);
             finish(); // Finish the current activity to prevent returning to it
         });

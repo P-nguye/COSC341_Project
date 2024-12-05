@@ -27,12 +27,21 @@ public class BaseFragment extends Fragment {
     private ScheduleAdapter adapter;
     private ArrayList<Schedule> scheduleList;
     private DatabaseReference db;
-
+    String userKey;
     //Override the original view create to implement the recycler view
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
+        // Retrieve userKey from arguments
+        if (getArguments() != null) {
+            userKey = getArguments().getString("userKey");
+        }
+
+        if (userKey == null) {
+            Toast.makeText(getContext(), "Error: User not logged in.", Toast.LENGTH_SHORT).show();
+            return view;
+        }
         recyclerView = view.findViewById(R.id.recycler_vw);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -41,7 +50,8 @@ public class BaseFragment extends Fragment {
         adapter = new ScheduleAdapter(this.getContext(),scheduleList);
         recyclerView.setAdapter(adapter);
         //initialize db
-        db = FirebaseDatabase.getInstance().getReference("schedules");
+        db = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("schedules");
+
         //get the schedule data from db
         fetchSchedules();
         return view;
