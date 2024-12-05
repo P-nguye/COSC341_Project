@@ -101,12 +101,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         Button btnEdit, btnDelete;
         public ScheduleViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.title_tv);
+            tvTitle = itemView.findViewById(R.id.crop_name_tv);
             tvDateTime = itemView.findViewById(R.id.date_time_tv);
-            tvGardenName = itemView.findViewById(R.id.gardenname_tv);
-            tvNotes = itemView.findViewById(R.id.notes_tv);
-            btnEdit = itemView.findViewById(R.id.edit_btn);
-            btnDelete = itemView.findViewById(R.id.delete_schedule_btn);
+            tvGardenName = itemView.findViewById(R.id.cropType_tv);
+            tvNotes = itemView.findViewById(R.id.crop_qty_tv);
+            btnEdit = itemView.findViewById(R.id.edit_crop_btn);
+            btnDelete = itemView.findViewById(R.id.delete_crop_btn);
         }
     }
 
