@@ -3,6 +3,7 @@ package com.example.cosc341_project;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     @Override
     public void onBindViewHolder(@NonNull CropViewHolder holder, int position) {
         Crop crop = cropList.get(position);
+
         holder.textCropName.setText(crop.getName());
         holder.textCropType.setText(crop.getType());
         holder.textCropQuantity.setText("Quantity: " + crop.getQuantity());
@@ -59,7 +61,7 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
                     .setTitle("Delete Crop")
                     .setMessage("Are you sure you want to delete this crop?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        deleteCrop(crop.getId(), position);
+                        deleteCrop(crop.getId(), holder.getAdapterPosition());
                     })
                     .setNegativeButton("No", null)
                     .show();
@@ -68,12 +70,14 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     private void deleteCrop(String cropId, int position) {
         // Delete crop from Firebase
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("crops").child(cropId);
+        Log.d("RecyclerView", "Size Before Entering Delete: " + cropList.size());
         ref.removeValue().addOnSuccessListener(aVoid -> {
             // Remove crop from the list and update RecyclerView
-            cropList.remove(position);
             if (position < cropList.size()) {
+
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position, cropList.size());
+                notifyItemRangeChanged(position, cropList.size() - position);
+
             } else {
                 notifyDataSetChanged(); // Full refresh if the last item is deleted
             }

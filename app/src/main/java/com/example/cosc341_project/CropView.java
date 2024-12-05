@@ -2,6 +2,7 @@ package com.example.cosc341_project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -63,6 +64,7 @@ public class CropView extends AppCompatActivity {
     }
     private void fetchCrops() {
         //Recieve updates about data changes
+        Log.d("RecyclerView", "Begining ondatachange: " + items.size());
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -75,6 +77,7 @@ public class CropView extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
+                Log.d("RecyclerView", "endofondatachange: " + items.size());
             }
 
             @Override
