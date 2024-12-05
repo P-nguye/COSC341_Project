@@ -75,17 +75,32 @@ public class ForgotPassword extends AppCompatActivity {
             return;
         }
 
-        // Generate random 6-digit code
-        Random random = new Random();
-        generatedCode = String.format("%06d", random.nextInt(1000000));
+        // Check if the email exists in the database
+        databaseReference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Email exists, generate random 6-digit code
+                    Random random = new Random();
+                    generatedCode = String.format("%06d", random.nextInt(1000000));
 
-        // Here, you would send the confirmation code via email.
-        // For simplicity, we'll simulate this with a Toast message.
-        Toast.makeText(this, "Confirmation code sent: " + generatedCode, Toast.LENGTH_SHORT).show();
+                    // Simulate sending the confirmation code via a Toast message
+                    Toast.makeText(ForgotPassword.this, "Confirmation code sent: " + generatedCode, Toast.LENGTH_SHORT).show();
 
-        // Enable the confirmation code field and button
-        etConfirmationCode.setVisibility(View.VISIBLE);
-        btnVerifyCode.setVisibility(View.VISIBLE);
+                    // Enable the confirmation code input field and verify button
+                    etConfirmationCode.setVisibility(View.VISIBLE);
+                    btnVerifyCode.setVisibility(View.VISIBLE);
+                } else {
+                    // Email not found in the database
+                    Toast.makeText(ForgotPassword.this, "Email not found in the database", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ForgotPassword.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void verifyCode() {
@@ -99,7 +114,7 @@ public class ForgotPassword extends AppCompatActivity {
         if (enteredCode.equals(generatedCode)) {
             Toast.makeText(this, "Code verified! You can now reset your password.", Toast.LENGTH_SHORT).show();
 
-            // Enable the new password field and button
+            // Enable the new password input field and reset button
             etNewPassword.setVisibility(View.VISIBLE);
             btnResetPassword.setVisibility(View.VISIBLE);
         } else {
@@ -127,7 +142,7 @@ public class ForgotPassword extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    Toast.makeText(ForgotPassword.this, "Email not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgotPassword.this, "Email not found in the database", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -137,4 +152,5 @@ public class ForgotPassword extends AppCompatActivity {
             }
         });
     }
+
 }
