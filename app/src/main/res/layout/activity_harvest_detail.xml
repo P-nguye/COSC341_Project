@@ -7,26 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".HarvestDetail">
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
         <!-- Title -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Harvest Information"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:padding="16dp" />
 
         <!-- Yield Input -->
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Add Harvest Information"
+            android:textAlignment="center"
+            android:textColor="@color/purple"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.041" />
+
         <EditText
             android:id="@+id/yieldEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
             android:hint="Enter total yield (e.g., 500 kg)"
             android:inputType="numberDecimal"
             android:padding="12dp" />
@@ -36,18 +44,20 @@
             android:id="@+id/yearEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edittext_background"
             android:hint="Enter year (e.g., 2024)"
             android:inputType="number"
-            android:padding="12dp"
-            android:layout_marginTop="12dp" />
+            android:padding="12dp" />
 
         <!-- Save Button -->
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Harvest Info"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Save Harvest Info" />
 
         <!-- Back Button -->
         <Button
