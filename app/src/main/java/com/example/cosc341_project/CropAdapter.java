@@ -71,8 +71,13 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
         ref.removeValue().addOnSuccessListener(aVoid -> {
             // Remove crop from the list and update RecyclerView
             cropList.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, cropList.size());
+            if (position < cropList.size()) {
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, cropList.size());
+            } else {
+                notifyDataSetChanged(); // Full refresh if the last item is deleted
+            }
+
         }).addOnFailureListener(e -> {
             // Handle failure
             new AlertDialog.Builder(context)
@@ -85,7 +90,7 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
 
     @Override
     public int getItemCount() {
-        return cropList.size();
+        return cropList != null ? cropList.size() : 0;
     }
 
     static class CropViewHolder extends RecyclerView.ViewHolder {
