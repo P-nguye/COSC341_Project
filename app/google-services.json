@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "564231139215",
-    "project_id": "gardenmanager-422d4",
-    "storage_bucket": "gardenmanager-422d4.firebasestorage.app"
+    "project_number": "458573468609",
+    "project_id": "hardmanagement-83115",
+    "storage_bucket": "hardmanagement-83115.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:564231139215:android:fa66aa4215a999da4fe5fa",
+        "mobilesdk_app_id": "1:458573468609:android:f656e05d4cc1ea9e119540",
         "android_client_info": {
           "package_name": "com.example.cosc341_project"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDQ_PbRQiJGXA623_3k3wcTuR9Re4uLzdo"
+          "current_key": "AIzaSyB2ysV5vm74DyVN-V4KBwmRnd21J1CyGqs"
         }
       ],
       "services": {

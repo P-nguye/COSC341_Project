@@ -23,7 +23,7 @@ public class HarvestDetail extends AppCompatActivity {
     private EditText yieldEditText, yearEditText;
     private Button saveButton, backButton;
     private DatabaseReference databaseReference;
-    private String cropType;
+    private String cropType,userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +41,15 @@ public class HarvestDetail extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
     // Get crop type from Intent
         cropType = getIntent().getStringExtra("cropType");
+        userKey = getIntent().getStringExtra("userKey");
+        if (cropType == null || userKey == null) {
+            Toast.makeText(this, "Error: Missing required data.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         // Initialize Firebase reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("harvest_info");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("harvest_info");
 
         // Save button listener
         saveButton.setOnClickListener(v -> saveHarvestInfo());

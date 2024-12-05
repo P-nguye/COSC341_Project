@@ -41,7 +41,7 @@ public class CreateSchedule extends AppCompatActivity {
     private CheckBox cbReminder;
     private Button btnSubmit, btnCancel;
     private ImageButton btnDate, btnTime;
-
+    private String userKey;
     private String selectedDate = "";
     private String selectedTime = "";
 
@@ -57,9 +57,21 @@ public class CreateSchedule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_schedule);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        // Retrieve userKey from Intent
+        userKey = getIntent().getStringExtra("userKey");
+        if (userKey == null) {
+            Toast.makeText(this, "Error: User not logged in.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         //Initialize db
-        db = FirebaseDatabase.getInstance().getReference("schedules");
-        gardenDB = FirebaseDatabase.getInstance().getReference("crops");
+        db = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("schedules");
+        gardenDB = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("crops");
 
         //Init UI
         etTitle=(EditText) findViewById(R.id.schedule_title);
@@ -95,17 +107,12 @@ public class CreateSchedule extends AppCompatActivity {
         if(edited){
             prepopulateForm(getIntent().getStringExtra("Schedule"));
         }
-
-        //default
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
     }
 
     private void cancelSchedule() {
         Intent intent = new Intent(CreateSchedule.this, ScheduleHub.class);
+        intent.putExtra("userKey", userKey); // Pass userKey back to ScheduleHub
+
         startActivity(intent);
     }
 

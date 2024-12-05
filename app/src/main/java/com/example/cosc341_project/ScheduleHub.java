@@ -20,16 +20,31 @@ public class ScheduleHub extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private Button btnHome, btnNew;
+    private String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_schedule_hub);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        // Retrieve userKey from Intent
+        userKey = getIntent().getStringExtra("userKey");
+        if (userKey == null) {
+            // If userKey is not found, return to the login screen
+            Intent intent = new Intent(this, HomePage.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         btnHome= findViewById(R.id.home_btn);
         btnNew = findViewById(R.id.add_task_btn);
         tabLayout = findViewById(R.id.task_tabs);
         //Load the fragment as today
-        loadFragment(new TodayFragment());
+        loadFragment(new TodayFragment(),userKey);
 
         // Tab selection listener
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -53,7 +68,7 @@ public class ScheduleHub extends AppCompatActivity {
                 }
 
                 if (selectedFragment != null) {
-                    loadFragment(selectedFragment);
+                    loadFragment(selectedFragment,userKey);
                 }
             }
 
@@ -78,7 +93,11 @@ public class ScheduleHub extends AppCompatActivity {
         });
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment, String userKey) {
+        // Pass userKey to the fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("userKey", userKey);
+        fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_layout, fragment);
@@ -86,12 +105,14 @@ public class ScheduleHub extends AppCompatActivity {
     }
 
     private void back() {
-        Intent intent = new Intent(ScheduleHub.this, MainActivity.class);
+        Intent intent = new Intent(ScheduleHub.this, HomePage.class);
+        intent.putExtra("userKey", userKey); // Pass the userKey back to the HomePage
         startActivity(intent);
     }
 
     private void createNewSchedule(){
         Intent intent = new Intent(ScheduleHub.this, CreateSchedule.class);
+        intent.putExtra("userKey", userKey); // Pass the userKey to the CreateSchedule activity
         startActivity(intent);
     }
 

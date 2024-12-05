@@ -41,7 +41,7 @@ public class GardenTracker extends AppCompatActivity {
     private HashMap<String, List<String>> childList;
     private static final int REQUEST_CODE = 1;
     private DatabaseReference databaseReference;
-
+    private String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +52,21 @@ public class GardenTracker extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        // Retrieve the userKey from the Intent
+        userKey = getIntent().getStringExtra("userKey");
+        if (userKey == null) {
+            Toast.makeText(this, "Error: User not logged in.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         // Initialize Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("gardens");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("gardens");
         // Initialize UI components
         expandableListView = findViewById(R.id.expandableListView);
 
         parentList = new ArrayList<>();
         childList = new HashMap<>();
-        String filename = "output.txt";
+        //String filename = "output.txt";
 //        getGarden(filename);
         getGardenDatabase();
 

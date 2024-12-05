@@ -34,7 +34,7 @@ public class HarvestReport extends AppCompatActivity {
     private ArrayList<String> cropList = new ArrayList<>();
     private ScrollView scrollView;
     private Button backButton;
-
+    private String userKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +46,17 @@ public class HarvestReport extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        userKey = getIntent().getStringExtra("userKey");
+        if (userKey == null) {
+            Toast.makeText(this, "Error: User not logged in.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         // Initialize UI components
         searchEditText = findViewById(R.id.searchEditText);
         scrollView = findViewById(R.id.scrollView);
         scrollLinearLayout = findViewById(R.id.scrollLinearLayout);
-        databaseReference = FirebaseDatabase.getInstance().getReference("crops");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("crops");
         backButton = findViewById(R.id.button);
 
         fetchCrops();
@@ -132,13 +138,14 @@ public class HarvestReport extends AppCompatActivity {
         builder.setNegativeButton("Add Info/Delete crop", (dialog, which) -> {
             Intent intent = new Intent(HarvestReport.this, HarvestDetail.class);
             addOrDelete(cropType);
-
+            intent.putExtra("userKey", userKey);
         });
         // Show Yield Report option
         builder.setNeutralButton("Show Yield Report", (dialog, which) -> {
             Toast.makeText(HarvestReport.this, "Navigating to Yield Report", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HarvestReport.this, YieldReport.class);
             intent.putExtra("cropType", cropType);
+            intent.putExtra("userKey", userKey);
             startActivity(intent);
         });
 
@@ -153,11 +160,13 @@ public class HarvestReport extends AppCompatActivity {
         builder.setPositiveButton("Add", (dialog, which) -> {
             Intent intent = new Intent(this, HarvestDetail.class);
             intent.putExtra("cropType", cropType);
+            intent.putExtra("userKey", userKey);
             startActivity(intent);
 
         });
         builder.setNegativeButton("Delete", (dialog, which) -> {
             delete(cropType);
+
 //            Toast.makeText(GardenEdit.this, "No", Toast.LENGTH_SHORT).show();
         });
         builder.show();
@@ -196,7 +205,10 @@ public class HarvestReport extends AppCompatActivity {
         builder.show();
     }
     private void showHarvestInfo(String cropType) {
-        DatabaseReference harvestInfoRef = FirebaseDatabase.getInstance().getReference("harvest_info").child(cropType);
+        DatabaseReference harvestInfoRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(userKey)
+                .child("harvest_info")
+                .child(cropType);
 
         harvestInfoRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult() != null) {

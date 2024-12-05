@@ -4,63 +4,108 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules;
+import com.example.cosc341_project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText etMail, etPassword;
+    private Button btnLogin,btnRegister;
+    private TextView tvForgotPassword;
+
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Apply system bar insets
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // Initialize UI elements
+        etMail = findViewById(R.id.etMail);
+        etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
+
+        // Initialize Firebase Database
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        // Set up login button
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleLogin();
+            }
         });
-
-        // Initialize buttons
-        openCreateCropButton = findViewById(R.id.openCreateCropButton);
-        btnHarvestReport = findViewById(R.id.btnHarvestReport);
-        buttonToGardenTracker = findViewById(R.id.toTrackerButton);
-        btnToSchedules=findViewById(R.id.toSchedulesButton);
-
-        // Set click listeners for both buttons
-        openCreateCropButton.setOnClickListener(this);
-        btnHarvestReport.setOnClickListener(this);
-        buttonToGardenTracker.setOnClickListener(this);
-        btnToSchedules.setOnClickListener(this);
+        // Set up register button
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterPage.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.openCreateCropButton) {
-            // Navigate to CreateCrop activity
-            Intent createCropIntent = new Intent(MainActivity.this, CreateCrop.class);
-            startActivity(createCropIntent);
-        } else if (v.getId() == R.id.btnHarvestReport) {
-            // Navigate to HarvestReport activity
-            Intent harvestReportIntent = new Intent(MainActivity.this, HarvestReport.class);
-            startActivity(harvestReportIntent);
-        } else if (v.getId() == R.id.weatherInfoButton) {
-            // Navigate to WeatherInfo activity
-            Intent weatherInfoIntent = new Intent(MainActivity.this, WeatherInfo.class);
-            startActivity(weatherInfoIntent);
-        } else if (v.getId() == R.id.toTrackerButton) {
-            Intent intent = new Intent(this, GardenTracker.class);
-            startActivity(intent);
+    private void handleLogin() {
+        String email = etMail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
         }
-        else if(v.getId()==R.id.toSchedulesButton){
-            Intent intent = new Intent(this, ScheduleHub.class);
-            startActivity(intent);
-        }
+
+        // Check credentials in Firebase Realtime Database
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean userFound = false;
+                String userKey = null;
+
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    String dbEmail = userSnapshot.child("email").getValue(String.class);
+                    String dbPassword = userSnapshot.child("password").getValue(String.class);
+
+                    if (dbEmail != null && dbEmail.equals(email) && dbPassword != null && dbPassword.equals(password)) {
+                        userFound = true;
+                        userKey = userSnapshot.getKey(); // Retrieve the user ID
+
+                        // Retrieve user data
+                        String firstName = userSnapshot.child("firstName").getValue(String.class);
+                        String lastName = userSnapshot.child("lastName").getValue(String.class);
+
+                        // Redirect to home page with user data and userKey
+                        Intent intent = new Intent(MainActivity.this, HomePage.class);
+                        intent.putExtra("firstName", firstName);
+                        intent.putExtra("lastName", lastName);
+                        intent.putExtra("email", dbEmail);
+                        intent.putExtra("userKey", userKey); // Pass the userKey to HomePage
+                        startActivity(intent);
+                        finish();
+                        break;
+                    }
+                }
+
+                if (!userFound) {
+                    Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
