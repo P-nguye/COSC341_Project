@@ -7,7 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="335dp"
+        android:layout_height="52dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.110000014"
+        app:srcCompat="@drawable/gardenly_logo" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -68,5 +81,6 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/black"
             android:text="Log Out" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
