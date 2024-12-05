@@ -16,30 +16,32 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="Weather information of [City Name]"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/purple"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- EditText for City Input -->
     <EditText
         android:id="@+id/cityInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/edittext_background"
         android:hint="Enter city name"
-        android:padding="10dp"
+        android:padding="12dp"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/headerTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/headerTextView" />
 
     <!-- Button to Fetch Weather -->
     <Button
         android:id="@+id/fetchWeatherButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="#4CAF50"
         android:text="Get Weather"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
