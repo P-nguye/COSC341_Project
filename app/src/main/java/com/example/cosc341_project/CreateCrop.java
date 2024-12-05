@@ -99,7 +99,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
+                        if (snapshot.exists() && !edited) {
                             // com.example.cosc341_project.Crop name already exists
                             Toast.makeText(CreateCrop.this, "A crop with this name already exists.", Toast.LENGTH_SHORT).show();
                         } else {
