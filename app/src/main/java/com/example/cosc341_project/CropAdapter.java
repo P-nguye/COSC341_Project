@@ -70,7 +70,6 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     private void deleteCrop(String cropId, int position) {
         // Delete crop from Firebase
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("crops").child(cropId);
-        Log.d("RecyclerView", "Size Before Entering Delete: " + cropList.size());
         ref.removeValue().addOnSuccessListener(aVoid -> {
             // Remove crop from the list and update RecyclerView
             if (position < cropList.size()) {
