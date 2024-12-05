@@ -1,8 +1,10 @@
 package com.example.cosc341_project;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +30,8 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
     private EditText cropName, cropType, cropQuantity;
     private Button createCropButton, backToMainButton;
     private DatabaseReference databaseReference;
+    private boolean edited;
+    private Context context=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,13 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
         // Set click listeners
         createCropButton.setOnClickListener(this);
         backToMainButton.setOnClickListener(this);
+
+        //Check if it is being edited already
+        //Check if it is being edited or not:
+        edited=getIntent().getBooleanExtra("Editing", false);
+        if(edited){
+            prepopulateForm(getIntent().getStringExtra("Crop"));
+        }
     }
 
     @Override
@@ -98,9 +109,16 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
                 });
     }
 
-                    private void createCrop(String name, String type, int quantity) {
+    private void createCrop(String name, String type, int quantity) {
+        String cropId;
+        if(!edited){
+             cropId= databaseReference.push().getKey();
+        }
+        else{
+            cropId=getIntent().getStringExtra("Crop");
+        }
         // Generate a unique key for the crop
-        String cropId = databaseReference.push().getKey();
+
 
         if (cropId != null) {
             // Create a crop object or use a Map for data
@@ -109,21 +127,56 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
             cropData.put("name", name);
             cropData.put("type", type);
             cropData.put("quantity", quantity);
+            if(!edited){
+                // Store data in Firebase
+                databaseReference.child(cropId).setValue(cropData).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "com.example.cosc341_project.Crop added successfully", Toast.LENGTH_SHORT).show();
+                        // Clear input fields
+                        cropName.setText("");
+                        cropType.setText("");
+                        cropQuantity.setText("");
+                    } else {
+                        Toast.makeText(this, "Failed to add crop", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else{
+                databaseReference.child(cropId).updateChildren(cropData)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(this, "Crop updated successfully", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(this, CropView.class);
+                            startActivity(intent);
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Failed to Add Cropp", Toast.LENGTH_SHORT).show();
+                        });
+            }
 
-            // Store data in Firebase
-            databaseReference.child(cropId).setValue(cropData).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(this, "com.example.cosc341_project.Crop added successfully", Toast.LENGTH_SHORT).show();
-                    // Clear input fields
-                    cropName.setText("");
-                    cropType.setText("");
-                    cropQuantity.setText("");
-                } else {
-                    Toast.makeText(this, "Failed to add crop", Toast.LENGTH_SHORT).show();
-                }
-            });
         } else {
             Toast.makeText(this, "Error generating crop ID", Toast.LENGTH_SHORT).show();
         }
+    }
+    private void prepopulateForm(String id){
+        // Editing an existing entry
+        databaseReference.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Populate the form fields with existing data
+                    cropName.setText(snapshot.child("name").getValue(String.class));
+                    cropType.setText(snapshot.child("type").getValue(String.class));
+                    cropQuantity.setText(snapshot.child("quantity").getValue(Integer.class).toString());
+                }
+                else{
+                    Toast.makeText(context, "Data not found for this ID", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
