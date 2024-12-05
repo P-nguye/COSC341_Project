@@ -10,9 +10,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_editor_absoluteY="74dp">
+
 
         <Button
             android:id="@+id/weatherInfoButton"
@@ -49,7 +52,14 @@
             android:id="@+id/btnHarvestReport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go to Harvest Report"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:text="Go to Harvest Report" />
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="Log Out" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
