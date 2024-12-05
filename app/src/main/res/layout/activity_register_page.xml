@@ -61,7 +61,7 @@
                     android:hint="Firstname"
                     android:background="@drawable/edittext_background"
                     android:padding="12dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/black"
                     android:textColorHint="#B0B0B0"
                     android:layout_marginEnd="8dp" />
 
@@ -73,7 +73,7 @@
                     android:hint="Lastname"
                     android:background="@drawable/edittext_background"
                     android:padding="12dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/black"
                     android:textColorHint="#B0B0B0" />
             </LinearLayout>
 
@@ -85,7 +85,7 @@
                 android:hint="Email"
                 android:background="@drawable/edittext_background"
                 android:padding="12dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textColorHint="#B0B0B0"
                 android:layout_marginBottom="16dp" />
 
@@ -97,7 +97,7 @@
                 android:hint="Password"
                 android:background="@drawable/edittext_background"
                 android:padding="12dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textColorHint="#B0B0B0"
                 android:inputType="textPassword"
                 android:layout_marginBottom="16dp" />
@@ -110,7 +110,7 @@
                 android:hint="Confirm password"
                 android:background="@drawable/edittext_background"
                 android:padding="12dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textColorHint="#B0B0B0"
                 android:inputType="textPassword"
                 android:layout_marginBottom="24dp" />
