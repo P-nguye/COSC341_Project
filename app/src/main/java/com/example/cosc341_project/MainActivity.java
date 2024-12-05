@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules;
+    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules, btnViewCrops;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnHarvestReport = findViewById(R.id.btnHarvestReport);
         buttonToGardenTracker = findViewById(R.id.toTrackerButton);
         btnToSchedules=findViewById(R.id.toSchedulesButton);
+        btnViewCrops=findViewById(R.id.viewCropsButton);
 
         // Set click listeners for both buttons
         openCreateCropButton.setOnClickListener(this);
         btnHarvestReport.setOnClickListener(this);
         buttonToGardenTracker.setOnClickListener(this);
         btnToSchedules.setOnClickListener(this);
+        btnViewCrops.setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(v.getId()==R.id.toSchedulesButton){
             Intent intent = new Intent(this, ScheduleHub.class);
+            startActivity(intent);
+        }
+        else if(v.getId()==R.id.viewCropsButton){
+            Intent intent = new Intent(this, CropView.class);
             startActivity(intent);
         }
     }

@@ -60,7 +60,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.createCropButton) {
-            // Handle Create Crop button click
+            // Handle Create com.example.cosc341_project.Crop button click
             String name = cropName.getText().toString().trim();
             String type = cropType.getText().toString().trim();
             String quantityStr = cropQuantity.getText().toString().trim();
@@ -83,7 +83,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            // Crop name already exists
+                            // com.example.cosc341_project.Crop name already exists
                             Toast.makeText(CreateCrop.this, "A crop with this name already exists.", Toast.LENGTH_SHORT).show();
                         } else {
                             // No duplicates found, proceed to create crop
@@ -113,7 +113,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
             // Store data in Firebase
             databaseReference.child(cropId).setValue(cropData).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Toast.makeText(this, "Crop added successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "com.example.cosc341_project.Crop added successfully", Toast.LENGTH_SHORT).show();
                     // Clear input fields
                     cropName.setText("");
                     cropType.setText("");
