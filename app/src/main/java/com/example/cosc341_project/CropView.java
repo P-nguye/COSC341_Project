@@ -47,7 +47,7 @@ public class CropView extends AppCompatActivity {
 ;
         adapter = new CropAdapter(this, items, userKey);
         rView.setAdapter(adapter);
-        db = FirebaseDatabase.getInstance().getReference("crops");
+        db = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("crops");
         fetchCrops();
 
         addBtn.setOnClickListener(v->{
@@ -56,7 +56,7 @@ public class CropView extends AppCompatActivity {
             startActivity(createCropIntent);
         });
         homeBtn.setOnClickListener(v->{
-            Intent homeIntent = new Intent(CropView.this, MainActivity.class);
+            Intent homeIntent = new Intent(CropView.this, HomePage.class);
             homeIntent.putExtra("userKey", userKey);
             startActivity(homeIntent);
         });
