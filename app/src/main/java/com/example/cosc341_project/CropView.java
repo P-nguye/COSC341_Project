@@ -28,6 +28,7 @@ public class CropView extends AppCompatActivity {
     DatabaseReference db;
     RecyclerView rView;
     ArrayList<Crop> items = new ArrayList<>();
+    String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,22 +39,25 @@ public class CropView extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        userKey=getIntent().getStringExtra("userKey");
         homeBtn = findViewById(R.id.home_Crops_btn);
         addBtn = findViewById(R.id.create_crop_btn);
         rView = findViewById(R.id.crop_recycler);
         rView.setLayoutManager(new LinearLayoutManager(this));
 ;
-        adapter = new CropAdapter(this, items);
+        adapter = new CropAdapter(this, items, userKey);
         rView.setAdapter(adapter);
         db = FirebaseDatabase.getInstance().getReference("crops");
         fetchCrops();
 
         addBtn.setOnClickListener(v->{
             Intent createCropIntent = new Intent(CropView.this, CreateCrop.class);
+            createCropIntent.putExtra("userKey", userKey);
             startActivity(createCropIntent);
         });
         homeBtn.setOnClickListener(v->{
             Intent homeIntent = new Intent(CropView.this, MainActivity.class);
+            homeIntent.putExtra("userKey", userKey);
             startActivity(homeIntent);
         });
     }

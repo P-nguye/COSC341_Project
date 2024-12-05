@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
-    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules,btnLogout;
+    Button openCreateCropButton, btnHarvestReport, buttonToGardenTracker, btnToSchedules,btnLogout, btnViewCrops;
     private String userKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         buttonToGardenTracker = findViewById(R.id.toTrackerButton);
         btnToSchedules=findViewById(R.id.toSchedulesButton);
         btnLogout = findViewById(R.id.btnLogout);
+        btnViewCrops = findViewById(R.id.view_crops_btn);
 
         // Set click listeners for both buttons
         openCreateCropButton.setOnClickListener(this);
@@ -44,6 +45,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         buttonToGardenTracker.setOnClickListener(this);
         btnToSchedules.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
+        btnViewCrops.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +80,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
             logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logoutIntent);
             finish();
+        }
+        else if (v.getId()==R.id.view_crops_btn){
+            Intent intent = new Intent(this, CropView.class);
+            intent.putExtra("userKey", userKey);
+            startActivity(intent);
         }
     }
 }

@@ -121,7 +121,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
              cropId= databaseReference.push().getKey();
         }
         else{
-            cropId=getIntent().getStringExtra("Crop");
+            cropId = getIntent().getStringExtra("Crop");
         }
 
         if (cropId != null) {

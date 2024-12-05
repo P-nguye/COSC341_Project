@@ -22,10 +22,12 @@ import java.util.List;
 public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder> {
     private Context context;
     private List<Crop> cropList;
+    private String userKey;
 
-    public CropAdapter(Context context, List<Crop> cropList) {
+    public CropAdapter(Context context, List<Crop> cropList, String userKey) {
         this.context=context;
         this.cropList = cropList;
+        this.userKey=userKey;
     }
 
     @NonNull
@@ -48,6 +50,7 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
             //Launch an editable intent that when flagged: Prepopulates the values
             intent.putExtra("Editing", true);
             intent.putExtra("Crop", crop.getId());
+            intent.putExtra("userKey", userKey);
             context.startActivity(intent);
         });
         holder.btnDeleteCrop.setOnClickListener(v ->{
