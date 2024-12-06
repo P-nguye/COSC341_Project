@@ -31,9 +31,9 @@
 
         <TextView
             android:id="@+id/crop_qty_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="14dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:text="Notes"
             android:textStyle="italic" />
 
