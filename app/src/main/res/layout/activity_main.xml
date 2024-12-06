@@ -120,3 +120,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/gardenly_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
