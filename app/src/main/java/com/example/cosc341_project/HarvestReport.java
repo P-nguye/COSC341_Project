@@ -184,6 +184,7 @@ public class HarvestReport extends AppCompatActivity {
                         // Remove the child
                         childSnapshot.getRef().removeValue().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+                                deleteHarvest(cropType);
                                 Toast.makeText(getApplicationContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Deletion failed!", Toast.LENGTH_SHORT).show();
@@ -203,6 +204,17 @@ public class HarvestReport extends AppCompatActivity {
 //            Toast.makeText(GardenEdit.this, "No", Toast.LENGTH_SHORT).show();
         });
         builder.show();
+    }
+    private void deleteHarvest(String croptype){
+        DatabaseReference fruitRef = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("harvest_info").child(croptype);
+
+// Delete the specified fruit node and all its children
+        fruitRef.removeValue()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                    } else {
+                    }
+                });
     }
     private void showHarvestInfo(String cropType) {
         DatabaseReference harvestInfoRef = FirebaseDatabase.getInstance().getReference("users")

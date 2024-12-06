@@ -31,9 +31,9 @@
 
         <TextView
             android:id="@+id/crop_qty_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="14dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:text="Notes"
             android:textStyle="italic" />
 
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/design_default_color_on_secondary"
+            android:backgroundTint="#E91E63"
             android:text="Delete" />
     </LinearLayout>
 

@@ -60,8 +60,9 @@
 
         <Button
             android:id="@+id/view_crops_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="View Crops" />
 
         <Button
@@ -85,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="#E91E63"
             android:text="Log Out" />
 
     </LinearLayout>
