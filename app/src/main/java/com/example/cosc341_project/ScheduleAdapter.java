@@ -54,6 +54,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             //Launch an editable intent that when flagged: Prepopulates the values
             intent.putExtra("Editing", true);
             intent.putExtra("Schedule", schedule.getId());
+            intent.putExtra("userKey", userKey);
             context.startActivity(intent);
         });
         holder.btnDelete.setOnClickListener(v ->{

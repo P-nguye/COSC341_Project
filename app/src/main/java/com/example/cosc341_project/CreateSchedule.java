@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -72,7 +73,7 @@ public class CreateSchedule extends AppCompatActivity {
         }
         //Initialize db
         db = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("schedules");
-        gardenDB = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("crops");
+        gardenDB = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("gardens");
 
         //Init UI
         etTitle=(EditText) findViewById(R.id.schedule_title);
@@ -89,6 +90,11 @@ public class CreateSchedule extends AppCompatActivity {
 
         // Populate spinners
         populateSpinners();
+        //Check if it is being edited or not:
+        edited=getIntent().getBooleanExtra("Editing", false);
+        if(edited){
+            prepopulateForm(getIntent().getStringExtra("Schedule"));
+        }
 
         //Set buttons
         // Date picker
@@ -102,12 +108,6 @@ public class CreateSchedule extends AppCompatActivity {
         
         //Cancel button
         btnCancel.setOnClickListener(v-> cancelSchedule());
-
-        //Check if it is being edited or not:
-        edited=getIntent().getBooleanExtra("Editing", false);
-        if(edited){
-            prepopulateForm(getIntent().getStringExtra("Schedule"));
-        }
     }
 
     private void cancelSchedule() {
@@ -158,7 +158,6 @@ public class CreateSchedule extends AppCompatActivity {
             id = db.push().getKey();
             if(id!=null) {
                 schedule.put("id", id);
-                Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
                 db.child(id).setValue(schedule)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(CreateSchedule.this, "Schedule saved", Toast.LENGTH_SHORT).show();
@@ -214,27 +213,27 @@ public class CreateSchedule extends AppCompatActivity {
         spinnerRepeat.setAdapter(repeatAdapter);
 
         //Set the crop spinner
-        ArrayList<String> cropNames = new ArrayList<>();
+        ArrayList<String> gardenNames = new ArrayList<>();
 
         gardenDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                cropNames.clear();
+                gardenNames.clear();
                 for (DataSnapshot cropSnapshot : snapshot.getChildren()) {
                     // Get the "name" field from Firebase
                     String cropName = cropSnapshot.child("name").getValue(String.class);
                     if (cropName != null) {
-                        cropNames.add(cropName);
+                        gardenNames.add(cropName);
                     }
                 }
 
-                if (cropNames.isEmpty()) {
-                    cropNames.add("No crops available"); // Default option
+                if (gardenNames.isEmpty()) {
+                    gardenNames.add("No gardens available"); // Default option
                 }
 
                 // Set the spinner adapter
                 gardenAdapter = new ArrayAdapter<>(CreateSchedule.this,
-                        android.R.layout.simple_spinner_item, cropNames);
+                        android.R.layout.simple_spinner_item, gardenNames);
                 gardenAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerGarden.setAdapter(gardenAdapter);
             }
@@ -266,8 +265,7 @@ public class CreateSchedule extends AppCompatActivity {
                         spinnerRepeat.setSelection(pos);
                     }
                     String garden = snapshot.child("garden").getValue(String.class);
-                    if(!garden.equals("No crops available")){
-                        Toast.makeText(CreateSchedule.this, "Here", Toast.LENGTH_SHORT).show();
+                    if(!garden.equals("No gardens available")){
                         int pos=gardenAdapter.getPosition(garden);
                         spinnerRepeat.setSelection(pos);
 
