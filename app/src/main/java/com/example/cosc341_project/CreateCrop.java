@@ -135,7 +135,7 @@ public class CreateCrop extends AppCompatActivity implements View.OnClickListene
                 // Store data in Firebase
                 databaseReference.child(cropId).setValue(cropData).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(this, "com.example.cosc341_project.Crop added successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Crop added successfully", Toast.LENGTH_SHORT).show();
                         // Clear input fields
                         cropName.setText("");
                         cropType.setText("");
