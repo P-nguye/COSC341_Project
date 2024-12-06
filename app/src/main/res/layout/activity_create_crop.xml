@@ -7,7 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="387dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="500dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wheat" />
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -72,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Back to Main Page" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

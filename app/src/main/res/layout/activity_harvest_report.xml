@@ -68,4 +68,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.143" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="301dp"
+        android:layout_height="301dp"
+        android:layout_marginTop="480dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/corner_leaf" />
 </androidx.constraintlayout.widget.ConstraintLayout>

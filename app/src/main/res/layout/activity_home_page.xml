@@ -19,6 +19,17 @@
         app:layout_constraintVertical_bias="0.110000014"
         app:srcCompat="@drawable/gardenly_logo" />
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="221dp"
+        android:layout_height="159dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/tea_plant" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
