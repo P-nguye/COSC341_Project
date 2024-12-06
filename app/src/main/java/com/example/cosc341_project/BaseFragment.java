@@ -47,7 +47,7 @@ public class BaseFragment extends Fragment {
 
         scheduleList = new ArrayList<>();
         //Get the iterator for the schedules
-        adapter = new ScheduleAdapter(this.getContext(),scheduleList);
+        adapter = new ScheduleAdapter(this.getContext(),scheduleList, userKey);
         recyclerView.setAdapter(adapter);
         //initialize db
         db = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("schedules");

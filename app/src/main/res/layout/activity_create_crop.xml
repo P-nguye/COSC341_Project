@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Other UI components like EditText and Create Crop Button -->
+        <!-- Other UI components like EditText and Create com.example.cosc341_project.Crop Button -->
         <EditText
             android:id="@+id/cropName"
             android:layout_width="match_parent"

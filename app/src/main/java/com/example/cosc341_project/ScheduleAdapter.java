@@ -2,6 +2,7 @@ package com.example.cosc341_project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     private Context context;
     private DatabaseReference db;
     private ArrayList<Schedule> scheduleList;
+    private String userKey;
 
-    public ScheduleAdapter(Context context, ArrayList<Schedule> scheduleList) {
+    public ScheduleAdapter(Context context, ArrayList<Schedule> scheduleList, String userKey) {
         this.context=context;
         this.scheduleList = scheduleList;
-        this.db= FirebaseDatabase.getInstance().getReference("schedules");
+        this.userKey=userKey;
+        this.db= FirebaseDatabase.getInstance().getReference("users").child(userKey).child("schedules");
     }
     @NonNull
     @Override
@@ -69,9 +72,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         if (scheduleId != null) {
             db.child(scheduleId).removeValue()
                     .addOnSuccessListener(aVoid -> {
-                        // Remove from the list and notify adapter
-                        scheduleList.remove(position);
-                        notifyItemRemoved(position);
+                        if(position<scheduleList.size()){
+                            // Remove from the list and notify adapter
+                            notifyItemRemoved(position);
+                        }
+
                         Toast.makeText(context, "Schedule deleted successfully", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
@@ -101,12 +106,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         Button btnEdit, btnDelete;
         public ScheduleViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.title_tv);
+            tvTitle = itemView.findViewById(R.id.crop_name_tv);
             tvDateTime = itemView.findViewById(R.id.date_time_tv);
-            tvGardenName = itemView.findViewById(R.id.gardenname_tv);
-            tvNotes = itemView.findViewById(R.id.notes_tv);
-            btnEdit = itemView.findViewById(R.id.edit_btn);
-            btnDelete = itemView.findViewById(R.id.delete_schedule_btn);
+            tvGardenName = itemView.findViewById(R.id.cropType_tv);
+            tvNotes = itemView.findViewById(R.id.crop_qty_tv);
+            btnEdit = itemView.findViewById(R.id.edit_crop_btn);
+            btnDelete = itemView.findViewById(R.id.delete_crop_btn);
         }
     }
 
