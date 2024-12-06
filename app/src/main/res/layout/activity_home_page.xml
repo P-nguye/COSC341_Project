@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="#E91E63"
             android:text="Log Out" />
 
     </LinearLayout>
