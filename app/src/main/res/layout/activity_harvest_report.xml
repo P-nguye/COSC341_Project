@@ -15,31 +15,20 @@
         android:textColorLink="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
-
-    <EditText
-        android:id="@+id/searchEditText"
-        android:layout_width="254dp"
-        android:layout_height="47dp"
-        android:hint="🔍 Enter fruit/vegetable type"
-        android:inputType="text"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.968"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.118" />
+        app:layout_constraintVertical_bias="0.947" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="305dp"
-        android:layout_height="46dp"
+        android:layout_height="52dp"
         android:text="Harvest Tracking"
-        android:textSize="40dp"
+        android:textAlignment="center"
+        android:textColor="@color/purple"
+        android:textSize="37dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,14 +38,14 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="348dp"
-        android:layout_height="214dp"
+        android:layout_height="304dp"
+        android:background="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.301"
-        android:background="@color/light_gray">
+        app:layout_constraintVertical_bias="0.409">
 
         <LinearLayout
             android:id="@+id/scrollLinearLayout"
@@ -64,4 +53,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="254dp"
+        android:layout_height="47dp"
+        android:background="@drawable/edittext_background"
+        android:hint="🔍 Enter fruit/vegetable type"
+        android:inputType="text"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.968"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.143" />
 </androidx.constraintlayout.widget.ConstraintLayout>

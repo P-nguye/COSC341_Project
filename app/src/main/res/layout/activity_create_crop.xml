@@ -8,36 +8,62 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="-366dp">
 
-        <!-- Other UI components like EditText and Create com.example.cosc341_project.Crop Button -->
+
+        <!-- Other UI components like EditText and Create Crop Button -->
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Create Crop"
+            android:textAlignment="center"
+            android:textColor="@color/purple"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.041" />
+
+
         <EditText
             android:id="@+id/cropName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Crop Name" />
+            android:background="@drawable/edittext_background"
+            android:hint="Crop Name"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/cropType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Crop Type" />
+            android:background="@drawable/edittext_background"
+            android:hint="Crop Type"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/cropQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
             android:hint="Crop Quantity"
-            android:inputType="number" />
+            android:inputType="number"
+            android:padding="12dp" />
 
         <Button
             android:id="@+id/createCropButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#4CAF50"
             android:text="Create Crop" />
 
         <!-- Back button -->

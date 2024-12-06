@@ -7,14 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="335dp"
+        android:layout_height="52dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.110000014"
+        app:srcCompat="@drawable/gardenly_logo" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="74dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
 
         <Button
@@ -22,13 +35,15 @@
             android:layout_width="204dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@drawable/button_background"
             android:onClick="onClick"
             android:text="Weather Information" />
 
         <Button
             android:id="@+id/toTrackerButton"
-            android:layout_width="wrap_content"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:onClick="toTracker"
             android:text="Go to Garden Tracker"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,8 +53,9 @@
 
         <Button
             android:id="@+id/openCreateCropButton"
-            android:layout_width="wrap_content"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="Go to Create Crop Page" />
 
         <Button
@@ -50,22 +66,27 @@
 
         <Button
             android:id="@+id/toSchedulesButton"
-            android:layout_width="wrap_content"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="Go to Schedules Page" />
 
         <Button
             android:id="@+id/btnHarvestReport"
-            android:layout_width="wrap_content"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/button_background"
             android:text="Go to Harvest Report" />
+
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
+            android:backgroundTint="@color/black"
             android:text="Log Out" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

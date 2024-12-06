@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
     android:padding="16dp">
 
     <!-- CardView for the form -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
         android:layout_margin="16dp"
-        app:cardElevation="8dp"
         app:cardBackgroundColor="#1C1C1C"
-        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/light_blue"
             android:orientation="vertical"
             android:padding="24dp">
 
@@ -29,49 +28,49 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🔵 Register"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="#42A5F5"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:text="🔵 Register"
+                android:textColor="#42A5F5"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Signup now and get full access to our app."
-                android:textSize="14sp"
-                android:textColor="#B0B0B0"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:text="Signup now and get full access to our app."
+                android:textColor="#767676"
+                android:textSize="14sp" />
 
             <!-- First Name and Last Name -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <EditText
                     android:id="@+id/etFirstName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="Firstname"
                     android:background="@drawable/edittext_background"
+                    android:hint="Firstname"
                     android:padding="12dp"
                     android:textColor="@color/black"
-                    android:textColorHint="#B0B0B0"
-                    android:layout_marginEnd="8dp" />
+                    android:textColorHint="#B0B0B0" />
 
                 <EditText
                     android:id="@+id/etLastName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Lastname"
                     android:background="@drawable/edittext_background"
+                    android:hint="Lastname"
                     android:padding="12dp"
                     android:textColor="@color/black"
                     android:textColorHint="#B0B0B0" />
@@ -82,60 +81,60 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/edittext_background"
+                android:hint="Email"
                 android:padding="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="#B0B0B0"
-                android:layout_marginBottom="16dp" />
+                android:textColorHint="#B0B0B0" />
 
             <!-- Password -->
             <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/edittext_background"
+                android:hint="Password"
+                android:inputType="textPassword"
                 android:padding="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="#B0B0B0"
-                android:inputType="textPassword"
-                android:layout_marginBottom="16dp" />
+                android:textColorHint="#B0B0B0" />
 
             <!-- Confirm Password -->
             <EditText
                 android:id="@+id/etConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm password"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/edittext_background"
+                android:hint="Confirm password"
+                android:inputType="textPassword"
                 android:padding="12dp"
                 android:textColor="@color/black"
-                android:textColorHint="#B0B0B0"
-                android:inputType="textPassword"
-                android:layout_marginBottom="24dp" />
+                android:textColorHint="#B0B0B0" />
 
             <!-- Submit Button -->
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Submit"
                 android:backgroundTint="#42A5F5"
-                android:textColor="#FFFFFF"
+                android:padding="12dp"
+                android:text="Submit"
                 android:textAllCaps="false"
-                android:padding="12dp" />
+                android:textColor="#FFFFFF" />
 
             <!-- Sign in Link -->
             <TextView
                 android:id="@+id/tvSignIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:text="Already have an account? Signin"
                 android:textColor="#42A5F5"
-                android:textSize="14sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
