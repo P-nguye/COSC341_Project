@@ -47,11 +47,12 @@ public class CreateSchedule extends AppCompatActivity {
     private String selectedDate = "";
     private String selectedTime = "";
 
-    private DatabaseReference db, gardenDB;
+    private DatabaseReference db;
     private boolean edited;
     ArrayAdapter<CharSequence> repeatAdapter;
     ArrayAdapter<String> gardenAdapter;
     Context context=this;
+    ArrayList<String> gardenNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +73,7 @@ public class CreateSchedule extends AppCompatActivity {
             return;
         }
         //Initialize db
-        db = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("schedules");
-        gardenDB = FirebaseDatabase.getInstance().getReference("users").child(userKey).child("gardens");
+        db = FirebaseDatabase.getInstance().getReference("users").child(userKey);
 
         //Init UI
         etTitle=(EditText) findViewById(R.id.schedule_title);
@@ -90,11 +90,9 @@ public class CreateSchedule extends AppCompatActivity {
 
         // Populate spinners
         populateSpinners();
+        Log.d("ScheduleCreate", "AfterPopSpinners: "+gardenNames.toString());
         //Check if it is being edited or not:
         edited=getIntent().getBooleanExtra("Editing", false);
-        if(edited){
-            prepopulateForm(getIntent().getStringExtra("Schedule"));
-        }
 
         //Set buttons
         // Date picker
@@ -141,7 +139,7 @@ public class CreateSchedule extends AppCompatActivity {
             id=getIntent().getStringExtra("Schedule");
             if(id!=null){
                 schedule.put("id", id);
-                db.child(id).updateChildren(schedule)
+                db.child("schedules").child(id).updateChildren(schedule)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(this, "Schedule updated successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(this, ScheduleHub.class);
@@ -155,10 +153,10 @@ public class CreateSchedule extends AppCompatActivity {
         }
         else{
             // Save to Firebase
-            id = db.push().getKey();
+            id = db.child("schedules").push().getKey();
             if(id!=null) {
                 schedule.put("id", id);
-                db.child(id).setValue(schedule)
+                db.child("schedules").child(id).setValue(schedule)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(CreateSchedule.this, "Schedule saved", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(this, ScheduleHub.class);
@@ -213,9 +211,7 @@ public class CreateSchedule extends AppCompatActivity {
         spinnerRepeat.setAdapter(repeatAdapter);
 
         //Set the crop spinner
-        ArrayList<String> gardenNames = new ArrayList<>();
-
-        gardenDB.addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child("gardens").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 gardenNames.clear();
@@ -226,7 +222,6 @@ public class CreateSchedule extends AppCompatActivity {
                         gardenNames.add(cropName);
                     }
                 }
-
                 if (gardenNames.isEmpty()) {
                     gardenNames.add("No gardens available"); // Default option
                 }
@@ -236,6 +231,11 @@ public class CreateSchedule extends AppCompatActivity {
                         android.R.layout.simple_spinner_item, gardenNames);
                 gardenAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerGarden.setAdapter(gardenAdapter);
+                ///Must setup pre-edit after the spinner is setup
+                if(edited){
+                    prepopulateForm(getIntent().getStringExtra("Schedule"));
+                    Log.d("ScheduleCreate", "EditWas called "+gardenNames.toString());
+                }
             }
 
             @Override
@@ -246,7 +246,7 @@ public class CreateSchedule extends AppCompatActivity {
     }
     private void prepopulateForm(String id){
         // Editing an existing entry
-        db.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child("schedules").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -254,10 +254,12 @@ public class CreateSchedule extends AppCompatActivity {
                     etTitle.setText(snapshot.child("title").getValue(String.class));
                     etNotes.setText(snapshot.child("notes").getValue(String.class));
                     if(snapshot.child("date").getValue(String.class)!=null){
-                        tvDate.setText(snapshot.child("date").getValue(String.class));
+                        selectedDate=snapshot.child("date").getValue(String.class);
+                        tvDate.setText(selectedDate);
                     }
                     if(snapshot.child("time").getValue(String.class)!=null){
-                        tvTime.setText(snapshot.child("time").getValue(String.class));
+                        selectedTime=snapshot.child("time").getValue(String.class);
+                        tvTime.setText(selectedTime);
                     }
                     String repeat =snapshot.child("repeat").getValue(String.class);
                     if(repeat!=null){
@@ -267,7 +269,8 @@ public class CreateSchedule extends AppCompatActivity {
                     String garden = snapshot.child("garden").getValue(String.class);
                     if(!garden.equals("No gardens available")){
                         int pos=gardenAdapter.getPosition(garden);
-                        spinnerRepeat.setSelection(pos);
+                        spinnerGarden.setSelection(pos);
+
 
                     }
                     boolean r= Boolean.TRUE.equals(snapshot.child("reminder").getValue(Boolean.class));
