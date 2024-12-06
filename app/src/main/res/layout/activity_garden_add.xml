@@ -23,7 +23,7 @@
         app:srcCompat="@drawable/tea_plant" />
 
     <EditText
-        android:id="@+id/nameET5"
+        android:id="@+id/nameET"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:background="@drawable/edittext_background"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_bias="0.271" />
 
     <EditText
-        android:id="@+id/datePlantedET5"
+        android:id="@+id/datePlantedET"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:background="@drawable/edittext_background"
@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.419" />
 
     <EditText
-        android:id="@+id/noteET5"
+        android:id="@+id/noteET"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:background="@drawable/edittext_background"
@@ -115,7 +115,7 @@
         app:layout_constraintVertical_bias="0.187" />
 
     <EditText
-        android:id="@+id/daysET5"
+        android:id="@+id/daysET"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:background="@drawable/edittext_background"
